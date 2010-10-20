@@ -1,0 +1,63 @@
+ClassTableInheritance
+=====================
+
+ This is an ActiveRecord plugin designed to allow 
+ simple multiple table (class) inheritance.
+ 
+ This plugin was inspired by:
+ inherits_from plugin => http://github.com/rwl4/inherits_from and
+ Multiple Table Inheritance with ActiveRecord => http://mediumexposure.com/multiple-table-inheritance-active-record/
+
+Example
+=======
+
+  create_table :product do |t|
+    t.string :description, :null => false
+    t.decimal :price
+    t.timestamps
+  end
+  
+  create_table :book, :id => false do |t|
+    t.integer :product_id, :null => false, :primary_key => true
+    t.string :author, :null => false
+  end
+  
+  create_table :videos, :id => false do |t|
+    t.integer :product_id, :null => false, :primary_key => true
+    t.string :year, :null => false
+    t.string :genre, :null => false
+  end
+
+  class Product < ActiveRecord::Base
+  end
+
+  class Book < ActiveRecord::Base
+    inherits_from :product
+  end
+
+  class Video < ActiveRecord::Base
+    inherits_from :product
+  end
+
+  book = Book.find(1)
+  book.name => "Agile Development with Rails"
+  book.author => "Dave Thomas"
+  book.price => 19.00
+  
+  video = Video.find(2)
+  book.name => "Inseption"
+  book.year => "2010"
+  book.genre => "SCI-FI" 
+  book.price => 22.00
+  
+  book = Book.new
+  book.name = "Hamlet"
+  book.author = "Shakespeare, William"
+  book.price => 14.00
+  book.save
+  
+  if you need help contanct me: bfscordeiro (at) gmail.com .
+
+
+
+Copyright (c) 2010 Bruno Cordeiro, released under the MIT license
