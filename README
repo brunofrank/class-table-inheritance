@@ -11,22 +11,24 @@ ClassTableInheritance
 Example
 =======
 
+  # Migrations 
+
   create_table :product do |t|
     t.string :description, :null => false
     t.decimal :price
     t.timestamps
   end
   
-  create_table :book, :id => false do |t|
-    t.integer :product_id, :null => false, :primary_key => true
+  create_table :book, :inherits => :product do |t|
     t.string :author, :null => false
   end
   
-  create_table :videos, :id => false do |t|
-    t.integer :product_id, :null => false, :primary_key => true
+  create_table :videos, :inherits => :product do |t|
     t.string :year, :null => false
     t.string :genre, :null => false
   end
+
+  # Models
 
   class Product < ActiveRecord::Base
   end
@@ -57,7 +59,6 @@ Example
   book.save
   
   if you need help contanct me: bfscordeiro (at) gmail.com .
-
 
 
 Copyright (c) 2010 Bruno Cordeiro, released under the MIT license
