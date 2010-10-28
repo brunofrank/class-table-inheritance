@@ -47,10 +47,10 @@ Example
   book.price => 19.00
   
   video = Video.find(2)
-  book.name => "Inseption"
-  book.year => "2010"
-  book.genre => "SCI-FI" 
-  book.price => 22.00
+  video.name => "Inseption"
+  video.year => "2010"
+  video.genre => "SCI-FI" 
+  video.price => 22.00
   
   book = Book.new
   book.name = "Hamlet"
