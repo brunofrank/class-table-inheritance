@@ -1,4 +1,5 @@
 require 'active_record'
+require 'inherits-migration'
 
 # ClassTableInheritance is an ActiveRecord plugin designed to allow 
 # simple multiple table (class) inheritance.
