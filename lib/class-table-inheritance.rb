@@ -6,6 +6,21 @@ require 'inherits-migration'
 class ActiveRecord::Base  
   attr_reader :reflection
       
+  def self.acts_as_subclass
+    if self.column_names.include?("type")
+      def self.find(*args)
+        old = super
+        puts self.inspect
+        if !old[:type].nil? && !old[:type].blank?
+          inherits_type = Object.const_get(old[:type].to_s)
+          inherits_type.send(:find, *args)
+        else
+          super
+        end
+      end
+    end  
+  end
+      
   def self.inherits_from(association_id)
 
     # add an association, and set the foreign key.
@@ -102,6 +117,10 @@ class ActiveRecord::Base
     # generalized class.
     define_method("save_inherit") do |*args|
       association = send(association_id)
+      if !association.column_for_attribute("type").nil?
+        association.type = self.class.to_s
+      end
+      
       association.save
       self["#{association_id}_id"] = association.id
       true
