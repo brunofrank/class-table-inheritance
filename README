@@ -1,5 +1,5 @@
-ClassTableInheritance
-=====================
+ClassTableInheritance 1.1.0 BETA
+================================
 
  This is an ActiveRecord plugin designed to allow 
  simple multiple table (class) inheritance.
@@ -20,6 +20,7 @@ Example
 
   create_table :product do |t|
     t.string :description, :null => false
+	t.string :subtype # Only if you need access of both side see example
     t.decimal :price
     t.timestamps
   end
@@ -36,6 +37,7 @@ Example
   # Models
 
   class Product < ActiveRecord::Base
+	acts_as_superclass # only if you want top-down access.
   end
 
   class Book < ActiveRecord::Base
@@ -62,6 +64,18 @@ Example
   book.author = "Shakespeare, William"
   book.price => 14.00
   book.save
+
+Top-down access (Polymorphic)
+=============================
+
+  if you want to access product and get field in the subclass do you need to create a field subtype:string in superclass and ad acts_as_superclass in superclass and now you can do like this.
+
+  product = Product.find 1  # This is a Book instance.
+  product.author
+
+  product = Product.find 2 # This is a Video instance.
+  product.genre
+
   
   if you need help contanct me: bfscordeiro (at) gmail.com .
 
