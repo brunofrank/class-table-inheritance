@@ -1,7 +1,7 @@
 require 'rake'
 spec = Gem::Specification.new do |s| 
   s.name = "class-table-inheritance"
-  s.version = "1.1.0"
+  s.version = "1.1.1"
   s.author = "Bruno Frank Cordeiro"
   s.email = "bfscordeiro@gmail.com"
   s.platform = Gem::Platform::RUBY
