@@ -15,7 +15,7 @@ class ActiveRecord::Base
             super_classes.map do |item|
               if !item.subtype.nil? && !item.subtype.blank?
                 inherits_type = Object.const_get(item.subtype.to_s)
-                inherits_type.send(:find, *args)
+                inherits_type.send(:find, item.id)
               else
                 super_classes
               end
