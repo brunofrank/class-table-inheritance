@@ -1,3 +1,5 @@
+require 'active_record'
+
 module InheritsMigration  
 
   def self.included(base)
@@ -25,4 +27,6 @@ module InheritsMigration
   end  
 end
 
+#ActiveRecord::ConnectionAdapters::SchemaStatements::send(:include, InheritsMigration)
+ActiveRecord::Base
 ActiveRecord::ConnectionAdapters::SchemaStatements::send(:include, InheritsMigration)
