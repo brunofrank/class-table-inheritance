@@ -38,7 +38,7 @@ class ActiveRecord::Base
   def self.inherits_from(association_id)
     
     # add an association, and set the foreign key.
-    has_one association_id, :foreign_key => :id
+    has_one association_id, :foreign_key => :id, :dependent => :destroy
 
 
     # set the primary key, it' need because the generalized table doesn't have
