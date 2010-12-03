@@ -1,5 +1,10 @@
-ClassTableInheritance 1.1.0 BETA
-================================
+Versions
+========
+
+If you are using Rails 2.3.8 or other version < 3, you have to use the version 1.1.0 of this plugin, for Rails 3 you need to use the version 1.2.0 of this plugin.
+
+ClassTableInheritance 1.2.0 
+===========================
 
  This is an ActiveRecord plugin designed to allow 
  simple multiple table (class) inheritance.
@@ -9,7 +14,7 @@ ClassTableInheritance 1.1.0 BETA
  Multiple Table Inheritance with ActiveRecord => http://mediumexposure.com/multiple-table-inheritance-active-record/
 
 How to install
-=============
+==============
 
 gem install class-table-inheritance
 
