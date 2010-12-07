@@ -35,7 +35,7 @@ EOF
     gem.email = "tvdeyen@gmail.com"
     gem.homepage = "http://github.com/tvdeyen/class-table-inheritance"
     gem.authors = `git log --pretty=format:"%an"`.split("\n").uniq.sort
-    gem.add_dependency "active_record", ">=3.0.0"
+    gem.add_dependency "activerecord", ">=3.0.0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
