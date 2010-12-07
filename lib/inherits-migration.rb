@@ -27,6 +27,5 @@ module InheritsMigration
   end  
 end
 
-#ActiveRecord::ConnectionAdapters::SchemaStatements::send(:include, InheritsMigration)
 ActiveRecord::Base
 ActiveRecord::ConnectionAdapters::SchemaStatements::send(:include, InheritsMigration)

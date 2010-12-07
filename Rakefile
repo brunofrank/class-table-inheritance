@@ -21,3 +21,24 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gem|
+    gem.name = "class-table-inheritance"
+    gem.summary = <<EOF
+ActiveRecord plugin designed to allow simple multiple table (class) inheritance.
+EOF
+    gem.description = <<EOF
+ActiveRecord plugin designed to allow simple multiple table (class) inheritance.
+EOF
+    gem.email = "tvdeyen@gmail.com"
+    gem.homepage = "http://github.com/tvdeyen/class-table-inheritance"
+    gem.authors = `git log --pretty=format:"%an"`.split("\n").uniq.sort
+    gem.add_dependency "active_record", ">=3.0.0"
+  end
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler (or a dependency) not available."
+  puts "Install it with: gem install jeweler"
+end

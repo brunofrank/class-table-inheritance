@@ -3,7 +3,7 @@ Versions
 
 If you are using Rails 2.3.8 or other version < 3, you have to use the version 1.1.x of this plugin, for Rails 3 you need to use the version 1.2.x or master of this plugin.
 
-ClassTableInheritance 1.2.0 
+ClassTableInheritance 1.2.1 
 ===========================
 
  This is an ActiveRecord plugin designed to allow 
@@ -23,14 +23,14 @@ Example
 
   # Migrations 
 
-  create_table :product do |t|
+  create_table :products do |t|
     t.string :description, :null => false
 	t.string :subtype # Only if you need access of both side see example
     t.decimal :price
     t.timestamps
   end
   
-  create_table :book, :inherits => :product do |t|
+  create_table :books, :inherits => :product do |t|
     t.string :author, :null => false
   end
   
