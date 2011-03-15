@@ -14,7 +14,7 @@ module InheritsMigration
     
     create_table_without_inherits(table_name, options) do |table_defintion|
       if options[:inherits]
-        association_type = Object.const_get(options[:inherits].to_s.camelcase)
+        association_type = options[:inherits].to_s.classify.constantize 
         association_inst = association_type.send(:new)
         attr_column = association_inst.column_for_attribute(association_type.primary_key)
         
