@@ -141,12 +141,12 @@ class ActiveRecord::Base
     # delegate all missing method calls to the parent association if
     # inherit_methods parameter is true
     if inherit_methods
-      define_method("method_mising") do |name, *args|
+      define_method("method_missing") do |name, *args|
         association = self.public_send(association_id)
         if association.respond_to? name
           association.send(name, *args)
         else
-          super
+          super name, *args
         end
       end
     end
