@@ -35,7 +35,7 @@ class ActiveRecord::Base
     end  
   end
 
-  def self.inherits_from(association_id)
+  def self.inherits_from(association_id, inherit_methods = false)
     
     # add an association, and set the foreign key.
     has_one association_id, :foreign_key => :id, :dependent => :destroy
@@ -136,6 +136,19 @@ class ActiveRecord::Base
       association.save
       self["#{association_id}_id"] = association.id
       true
+    end
+
+    # delegate all missing method calls to the parent association if
+    # inherit_methods parameter is true
+    if inherit_methods
+      define_method("method_mising") do |name, *args|
+        association = self.public_send(association_id)
+        if association.respond_to? name
+          association.send(name, *args)
+        else
+          super
+        end
+      end
     end
   end
 end
