@@ -38,7 +38,7 @@ class ActiveRecord::Base
   def self.inherits_from(association_id, inherit_methods = false)
     
     # add an association, and set the foreign key.
-    has_one association_id, :foreign_key => :id, :dependent => :destroy
+    belongs_to association_id, :dependent => :destroy
 
 
     # set the primary key, it' need because the generalized table doesn't have
@@ -81,7 +81,7 @@ class ActiveRecord::Base
   
     # get the class of association by reflection, this is needed because
     # i need to get the methods and attributes to make a proxy methods.
-    reflection = create_reflection(:has_one, association_id, {}, self)
+    reflection = create_reflection(:belongs_to, association_id, {}, self)
     association_class = reflection.class_name.constantize
     # Get the colluns of association class.
     inherited_columns = association_class.column_names
