@@ -58,7 +58,7 @@ class ActiveRecord::Base
   
     # bind the before save, this method call the save of association, and
     # get our generated ID an set to association_id field.
-    before_save :save_inherit
+    before_validation :set_inherit
   
   
     # Bind the validation of association.
@@ -125,10 +125,10 @@ class ActiveRecord::Base
     end
 
 
-    # Create a method do bind in before_save callback, this method
+    # Create a method do bind in before_validation callback, this method
     # only call the save of association class and set the id in the
     # generalized class.
-    define_method("save_inherit") do |*args|
+    define_method("set_inherit") do |*args|
       association = send(association_id)
       if association.attribute_names.include?("subtype")
         association.subtype = self.class.to_s
