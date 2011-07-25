@@ -1,3 +1,11 @@
+Change log
+==========
+
+* Now you can inherits from and to modules like inherits_from 'Module::Model', see the the name of field 
+must be module_model_id:integer thanks for Marc Remolt (https://github.com/mremolt).
+* Unit test
+
+
 Versions
 ========
 
@@ -39,6 +47,7 @@ Example
     t.string :genre, :null => false
   end
 
+
   # Models
 
   class Product < ActiveRecord::Base
@@ -69,6 +78,28 @@ Example
   book.author = "Shakespeare, William"
   book.price => 14.00
   book.save
+  
+  
+Module inheritance
+==================
+# Migrations 
+
+create_table :mod_users do |t|
+  t.string :name, :null => false
+end  
+
+create_table :managers, :inherits => 'Mod::User' do |t|
+  t.string :salary, :null => false
+end
+
+# Models
+
+class Mod::User < ActiveRecord::Base
+end  
+
+class Manager < ActiveRecord::Base
+  inherits_from 'Mod::User'  
+end
 
 Top-down access (Polymorphic)
 =============================

@@ -1,1 +1,2 @@
 *.gem
+test/cti_plugin.sqlite3
