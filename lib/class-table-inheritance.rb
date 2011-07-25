@@ -14,7 +14,7 @@ class ActiveRecord::Base
           if super_classes.kind_of? Array
             super_classes.map do |item|
               if !item.subtype.nil? && !item.subtype.blank?
-                inherits_type = Object.const_get(item.subtype.to_s)
+                inherits_type = super_classes.subtype.to_s.classify.constantize
                 inherits_type.send(:find, item.id)
               else
                 super_classes
@@ -22,7 +22,7 @@ class ActiveRecord::Base
             end
           else
             if !super_classes.subtype.nil? && !super_classes.subtype.blank?
-              inherits_type = Object.const_get(super_classes.subtype.to_s)
+              inherits_type = super_classes.subtype.to_s.classify.constantize
               inherits_type.send(:find, *args)
             else
               super_classes
@@ -35,7 +35,7 @@ class ActiveRecord::Base
     end  
   end
 
-  def self.inherits_from(association_id)
+  def self.inherits_from(association_id, inherit_methods = false)
     
     # add an association, and set the foreign key.
     has_one association_id, :foreign_key => :id, :dependent => :destroy
@@ -82,7 +82,7 @@ class ActiveRecord::Base
     # get the class of association by reflection, this is needed because
     # i need to get the methods and attributes to make a proxy methods.
     reflection = create_reflection(:has_one, association_id, {}, self)
-    association_class = Object.const_get(reflection.class_name)    
+    association_class = reflection.class_name.constantize
     # Get the colluns of association class.
     inherited_columns = association_class.column_names
     # Make a filter in association colluns to exclude the colluns that
@@ -136,6 +136,19 @@ class ActiveRecord::Base
       association.save
       self["#{association_id}_id"] = association.id
       true
+    end
+
+    # delegate all missing method calls to the parent association if
+    # inherit_methods parameter is true
+    if inherit_methods
+      define_method("method_missing") do |name, *args|
+        association = self.public_send(association_id)
+        if association.respond_to? name
+          association.send(name, *args)
+        else
+          super name, *args
+        end
+      end
     end
   end
 end
