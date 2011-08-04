@@ -13,17 +13,17 @@ class ActiveRecord::Base
         begin
           if super_classes.kind_of? Array
             super_classes.map do |item|
-              if !item.subtype.nil? && !item.subtype.blank?
+              if !item.subtype.blank?
                 inherits_type = item.subtype.to_s.classify.constantize
-                inherits_type.send(:find, item.id)
+                inherits_type.find(item.id)
               else
                 super_classes
               end
             end
           else
-            if !super_classes.subtype.nil? && !super_classes.subtype.blank?
+            if !super_classes.subtype.blank?
               inherits_type = super_classes.subtype.to_s.classify.constantize
-              inherits_type.send(:find, *args)
+              inherits_type.find(super_classes.id)
             else
               super_classes
             end
