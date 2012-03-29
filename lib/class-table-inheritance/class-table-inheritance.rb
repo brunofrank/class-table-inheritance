@@ -1,4 +1,3 @@
-
 # ClassTableInheritance is an ActiveRecord plugin designed to allow 
 # simple multiple table (class) inheritance.
 class ActiveRecord::Base  
@@ -29,6 +28,14 @@ class ActiveRecord::Base
         rescue
           super_classes
         end
+      end
+      
+      def self.first(*args)
+        self.find(:first, *args)
+      end
+
+      def self.last(*args)
+        self.find(:last, *args)
       end
     end  
   end
