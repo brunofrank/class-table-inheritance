@@ -11,10 +11,10 @@ class ActiveRecord::Base
           if super_classes.kind_of? Array
             super_classes.map do |item|
               if !item.subtype.nil? && !item.subtype.blank?
-                inherits_type = super_classes.subtype.to_s.classify.constantize
+                inherits_type = item.subtype.to_s.classify.constantize
                 inherits_type.send(:find, item.id)
               else
-                super_classes
+                item
               end
             end
           else
@@ -29,7 +29,7 @@ class ActiveRecord::Base
           super_classes
         end
       end
-      
+
       def self.first(*args)
         self.find(:first, *args)
       end
@@ -37,7 +37,11 @@ class ActiveRecord::Base
       def self.last(*args)
         self.find(:last, *args)
       end
-    end  
+
+      def self.all(*args)
+        self.find(:all, *args)
+      end
+    end
   end
 
   def self.inherits_from(association_id)
@@ -48,7 +52,7 @@ class ActiveRecord::Base
     else
       class_name = association_id.to_s.classify
     end
-    
+
     # add an association, and set the foreign key.
     has_one association_id, :class_name => class_name, :foreign_key => :id, :dependent => :destroy
 
