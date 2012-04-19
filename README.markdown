@@ -6,7 +6,6 @@ Change log
 must be module_model_id:integer thanks for Marc Remolt (https://github.com/mremolt).
 * Unit test
 
-2
 Note about version
 ------------------
 
