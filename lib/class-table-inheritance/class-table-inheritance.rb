@@ -127,6 +127,22 @@ class ActiveRecord::Base
         end
     	end
     end
+  
+    # create inherited public  methods
+    (association_class.new.public_methods - self.new.public_methods).each do |name|
+      define_method name do
+        # if the field is ID than i only bind that with the association field.
+        # this is needed to bypass the overflow problem when the ActiveRecord
+        # try to get the id to find the association.
+        if name == 'id'
+          self["#{association_id}_id"]
+        else 
+          assoc = send(association_id)
+          assoc.send(name)
+        end
+      end
+    
+    end
 
 
     # Create a method do bind in before_save callback, this method

@@ -25,7 +25,8 @@ class ClassTableInheritanceTest < Test::Unit::TestCase
     
     book = Book.find book.id
     assert_equal title, book.name
-    assert_equal isbn, book.isbn    
+    assert_equal isbn, book.isbn
+    assert_equal "some_method", book.some_method
   end  
   
   def test_inheritance_video

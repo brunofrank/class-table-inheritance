@@ -1,6 +1,7 @@
 Change log
 ----------
 
+* fixed method_missing (subclass not responding to user defined superclass public methods)
 * Removed 'set_primary_key' deprecation warning with Rails >= 3.2.3
 * Now you can inherits from and to modules like inherits_from 'Module::Model', see the the name of field 
 must be module_model_id:integer thanks for Marc Remolt (https://github.com/mremolt).
