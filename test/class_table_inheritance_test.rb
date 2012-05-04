@@ -41,6 +41,7 @@ class ClassTableInheritanceTest < Test::Unit::TestCase
     video = Mod::Video.find video.id
     assert_equal name, video.name
     assert_equal url, video.url    
+    assert_equal "some_method", video.some_method
   end  
 
   def test_inheritance_user_save
@@ -66,6 +67,7 @@ class ClassTableInheritanceTest < Test::Unit::TestCase
     manager = Manager.find manager.id
     assert_equal name, manager.name
     assert_equal salary, manager.salary    
+    assert manager.some_user_method  
   end  
 
   
