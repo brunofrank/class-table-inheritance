@@ -42,6 +42,8 @@ class ClassTableInheritanceTest < Test::Unit::TestCase
     assert_equal name, video.name
     assert_equal url, video.url    
     assert_equal "some_method", video.some_method
+    assert video.respond_to?(:some_method)
+    assert !video.respond_to?(:xxxxxx)
   end  
 
   def test_inheritance_user_save

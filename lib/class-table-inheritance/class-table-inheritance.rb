@@ -3,6 +3,7 @@
 # simple multiple table (class) inheritance.
 class ActiveRecord::Base  
   attr_reader :reflection
+  alias old_respond_to? respond_to?
 
   def self.acts_as_superclass
     if self.column_names.include?("subtype")
@@ -132,6 +133,12 @@ class ActiveRecord::Base
     define_method :method_missing do |meth, *args, &blk|
       association = send(association_id)
       association.send(meth, *args, &blk)
+    end
+  
+    #fix respond_to bug
+    define_method :respond_to? do |meth, include_private=false|
+      association = send(association_id)
+      self.old_respond_to?(meth, include_private) ? true : association.old_respond_to?(meth, include_private)
     end
 
 
