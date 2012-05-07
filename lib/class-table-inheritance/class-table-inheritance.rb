@@ -68,7 +68,12 @@ class ActiveRecord::Base
   
   
     # Bind the validation of association.
-    validate :inherit_association_must_be_valid    
+    validate :inherit_association_must_be_valid
+    
+    #Generates the 'super' method
+    define_method("super") do
+      send(association_id)
+    end
 
     # Generate a method to validate the field of association.    
     define_method("inherit_association_must_be_valid") do

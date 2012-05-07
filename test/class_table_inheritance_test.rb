@@ -27,6 +27,8 @@ class ClassTableInheritanceTest < Test::Unit::TestCase
     assert_equal title, book.name
     assert_equal isbn, book.isbn
     assert_equal "some_method", book.some_method
+    assert_equal "book", book.some_overrriden_method
+    assert_equal "product", book.super.some_overrriden_method
   end  
   
   def test_inheritance_video
