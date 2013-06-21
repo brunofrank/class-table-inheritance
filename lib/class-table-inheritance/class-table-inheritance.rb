@@ -48,7 +48,9 @@ class ActiveRecord::Base
 
     # set the primary key, it' need because the generalized table doesn't have
     # a field ID.
-    self.primary_key "#{association_id}_id"
+    #set_primary_key "#{association_id}_id"
+    #self.primary_key "#{association_id}_id"
+    self.primary_key
 
 
     # Autobuild method to make a instance of association
