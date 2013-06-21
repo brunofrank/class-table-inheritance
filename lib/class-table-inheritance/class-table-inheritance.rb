@@ -50,7 +50,7 @@ class ActiveRecord::Base
     # a field ID.
     #set_primary_key "#{association_id}_id"
     #self.primary_key "#{association_id}_id"
-    self.primary_key "#{association_id}_id"
+    self.primary_key = "#{association_id}_id"
 
 
     # Autobuild method to make a instance of association
