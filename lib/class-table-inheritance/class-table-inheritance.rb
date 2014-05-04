@@ -1,7 +1,6 @@
-
-# ClassTableInheritance is an ActiveRecord plugin designed to allow 
+# ClassTableInheritance is an ActiveRecord plugin designed to allow
 # simple multiple table (class) inheritance.
-class ActiveRecord::Base  
+class ActiveRecord::Base
   attr_reader :reflection
 
   def self.acts_as_superclass
@@ -12,10 +11,10 @@ class ActiveRecord::Base
           if super_classes.kind_of? Array
             super_classes.map do |item|
               if !item.subtype.nil? && !item.subtype.blank?
-                inherits_type = super_classes.subtype.to_s.classify.constantize
+                inherits_type = item.subtype.to_s.classify.constantize
                 inherits_type.send(:find, item.id)
               else
-                super_classes
+                item
               end
             end
           else
@@ -26,11 +25,24 @@ class ActiveRecord::Base
               super_classes
             end
           end
-        rescue
+        rescue Exception => e
+          Rails.logger.warn "find() call in superclass errored out. message: #{e.message}"
           super_classes
         end
       end
-    end  
+
+      def self.first(*args)
+        self.find(:first, *args)
+      end
+
+      def self.last(*args)
+        self.find(:last, *args)
+      end
+
+      def self.all(*args)
+        self.find(:all, *args)
+      end
+    end
   end
 
   def self.inherits_from(association_id)
@@ -41,7 +53,7 @@ class ActiveRecord::Base
     else
       class_name = association_id.to_s.classify
     end
-    
+
     # add an association, and set the foreign key.
     has_one association_id, :class_name => class_name, :foreign_key => :id, :dependent => :destroy
 
@@ -56,20 +68,17 @@ class ActiveRecord::Base
       send("#{association_id}_without_autobuild") || send("build_#{association_id}")
     end
 
-  
     # Set a method chain whith autobuild.
-    alias_method_chain association_id, :autobuild    
+    alias_method_chain association_id, :autobuild
 
-  
     # bind the before save, this method call the save of association, and
     # get our generated ID an set to association_id field.
     before_save :save_inherit
-  
-  
-    # Bind the validation of association.
-    validate :inherit_association_must_be_valid    
 
-    # Generate a method to validate the field of association.    
+    # Bind the validation of association.
+    validate :inherit_association_must_be_valid
+
+    # Generate a method to validate the field of association.
     define_method("inherit_association_must_be_valid") do
       association = send(association_id)
 
@@ -78,12 +87,10 @@ class ActiveRecord::Base
           errors.add(attr, message)
         end
       end
-    
+
       valid
-    end    
-        
-  
-  
+    end
+
     # get the class of association by reflection, this is needed because
     # i need to get the methods and attributes to make a proxy methods.
     association_class = class_name.constantize
@@ -97,8 +104,7 @@ class ActiveRecord::Base
     # Make a filter in association methods to exclude the methods that
     # the generalizae class already have.
     inherited_methods = inherited_methods.reject { |c| self.reflections.map {|key, value| key.to_s }.include?(c) }
-  
-  
+
     # create the proxy methods to get and set the properties and methods
     # in association class.
     (inherited_columns + inherited_methods).each do |name|
@@ -114,20 +120,18 @@ class ActiveRecord::Base
         end
     	end
 
-  	
     	define_method "#{name}=" do |new_value|
     	  # if the field is ID than i only bind that with the association field.
     	  # this is needed to bypass the overflow problem when the ActiveRecord
     	  # try to get the id to find the association.
     	  if name == 'id'
     	    self["#{association_id}_id"] = new_value
-    	  else     	  
+    	  else
           assoc = send(association_id)
           assoc.send("#{name}=", new_value)
         end
     	end
     end
-
 
     # Create a method do bind in before_save callback, this method
     # only call the save of association class and set the id in the
