@@ -42,8 +42,8 @@ class ActiveRecord::Base
       class_name = association_id.to_s.classify
     end
     
-    # add an association, and set the foreign key.
-    has_one association_id, :class_name => class_name, :foreign_key => :id, :dependent => :destroy
+    # add an association
+    belongs_to association_id, :class_name => class_name, :dependent => :destroy
 
 
     # set the primary key, it' need because the generalized table doesn't have
