@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ClassTableInheritanceTest < Test::Unit::TestCase
+class ClassTableInheritanceTest < Minitest::Test
   
   def test_create
     name = 'Bike'
