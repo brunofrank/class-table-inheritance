@@ -3,6 +3,7 @@
 # simple multiple table (class) inheritance.
 class ActiveRecord::Base  
   attr_reader :reflection
+  alias old_respond_to? respond_to?
 
   def self.acts_as_superclass
     if self.column_names.include?("subtype")
@@ -67,7 +68,12 @@ class ActiveRecord::Base
   
   
     # Bind the validation of association.
-    validate :inherit_association_must_be_valid    
+    validate :inherit_association_must_be_valid
+    
+    #Generates the 'super' method
+    define_method("super") do
+      send(association_id)
+    end
 
     # Generate a method to validate the field of association.    
     define_method("inherit_association_must_be_valid") do
@@ -126,6 +132,18 @@ class ActiveRecord::Base
           assoc.send("#{name}=", new_value)
         end
     	end
+    end
+  
+    #fix method missing
+    define_method :method_missing do |meth, *args, &blk|
+      association = send(association_id)
+      association.send(meth, *args, &blk)
+    end
+  
+    #fix respond_to bug
+    define_method :respond_to? do |meth, include_private=false|
+      association = send(association_id)
+      self.old_respond_to?(meth, include_private) ? true : association.old_respond_to?(meth, include_private)
     end
 
 
