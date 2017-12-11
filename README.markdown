@@ -1,8 +1,15 @@
 Change log
 ----------
 
-* Now you can inherits from and to modules like inherits_from 'Module::Model', see the the name of field 
-must be module_model_id:integer thanks for Marc Remolt (https://github.com/mremolt).
+### 1.3.1
+
+* Removed 'set_primary_key' deprecation warning
+* Make the gem depencies explicit and require ActiveRecord 4.x or 5.0
+
+
+### 1.3.0
+* Now you can inherits from and to modules like inherits_from 'Module::Model', see the the name of
+  field must be module_model_id:integer thanks for Marc Remolt (https://github.com/mremolt).
 * Unit test
 
 

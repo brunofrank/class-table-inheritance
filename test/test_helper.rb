@@ -1,8 +1,11 @@
 require 'rubygems'
-require 'test/unit'
+require 'minitest/autorun'
+require 'minitest/reporters'
 require 'active_record'
 require 'class-table-inheritance'
 require 'yaml'
+
+Minitest::Reporters.use!
 
 database = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
 ActiveRecord::Base.establish_connection(database['sqlite3'])
