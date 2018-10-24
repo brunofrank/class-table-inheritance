@@ -5,7 +5,7 @@ Change log
 
 ### 1.4.0
 
-* Add ActiveRecord 5.1 support
+* Add ActiveRecord 5.2 support
 * Require Ruby 2.2 or newer.
 
 

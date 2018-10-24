@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '~> 2.2'
 
-  s.add_runtime_dependency 'activerecord', '>=4', '<5.2'
+  s.add_runtime_dependency 'activerecord', '>=4', '<6'
 
   s.add_development_dependency 'minitest-reporters','~>1.1'
   s.add_development_dependency 'rake', '>=11'
