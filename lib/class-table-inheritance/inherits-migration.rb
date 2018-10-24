@@ -1,17 +1,9 @@
-
-module InheritsMigration  
-
-  def self.included(base)
-    base.class_eval do
-      alias_method_chain :create_table , :inherits
-    end
-  end
-  
+module InheritsMigration
   # Generate the association field.
-  def create_table_with_inherits(table_name, options = {}, &block)
+  def create_table(table_name, options = {}, &block)
     options[:id] ||= false if options[:inherits]
     
-    create_table_without_inherits(table_name, options) do |table_defintion|
+    super(table_name, options) do |table_defintion|
       if options[:inherits]
         if options[:inherits].kind_of?(String)
           column_to_create = options[:inherits].gsub(/::/, '_').downcase
@@ -32,5 +24,4 @@ module InheritsMigration
   end  
 end
 
-ActiveRecord::Base
-ActiveRecord::ConnectionAdapters::SchemaStatements::send(:include, InheritsMigration)
+ActiveRecord::ConnectionAdapters::SchemaStatements.prepend(InheritsMigration)
