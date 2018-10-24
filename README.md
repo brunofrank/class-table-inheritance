@@ -49,7 +49,7 @@ Example
 ```ruby
   create_table :products do |t|
     t.string :description, :null => false
-	t.string :subtype # Only if you need access of both side see example
+    t.string :subtype # Only if you need access of both side see example
     t.decimal :price
     t.timestamps
   end
@@ -68,7 +68,7 @@ Example
 
 ```ruby
   class Product < ActiveRecord::Base
-	acts_as_superclass # only if you want top-down access.
+    acts_as_superclass # only if you want top-down access.
   end
 
   class Book < ActiveRecord::Base
