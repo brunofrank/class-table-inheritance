@@ -51,15 +51,12 @@ class ActiveRecord::Base
     self.primary_key = "#{association_id}_id"
 
 
-    # Autobuild method to make a instance of association
-    define_method("#{association_id}_with_autobuild") do
-      send("#{association_id}_without_autobuild") || send("build_#{association_id}")
+    # Autobuild method to make an instance of association
+    m = const_set("#{association_id.to_s.camelize}Builder", Module.new)
+    m.send(:define_method, association_id) do
+      super() || send("build_#{association_id}")
     end
-
-  
-    # Set a method chain whith autobuild.
-    alias_method_chain association_id, :autobuild    
-
+    prepend(m)
   
     # bind the before save, this method call the save of association, and
     # get our generated ID an set to association_id field.
@@ -106,9 +103,9 @@ class ActiveRecord::Base
     	  # if the field is ID than i only bind that with the association field.
     	  # this is needed to bypass the overflow problem when the ActiveRecord
     	  # try to get the id to find the association.
-    	  if name == 'id'
+        if name == 'id'
     	    self["#{association_id}_id"]
-    	  else 
+        else
           assoc = send(association_id)
           assoc.send(name)
         end
@@ -119,9 +116,9 @@ class ActiveRecord::Base
     	  # if the field is ID than i only bind that with the association field.
     	  # this is needed to bypass the overflow problem when the ActiveRecord
     	  # try to get the id to find the association.
-    	  if name == 'id'
+        if name == 'id'
     	    self["#{association_id}_id"] = new_value
-    	  else     	  
+        else
           assoc = send(association_id)
           assoc.send("#{name}=", new_value)
         end

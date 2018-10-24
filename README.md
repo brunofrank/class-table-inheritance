@@ -1,5 +1,13 @@
+[![Build Status](https://travis-ci.org/brunofrank/class-table-inheritance.svg?branch=master)](https://travis-ci.org/brunofrank/class-table-inheritance)
+
 Change log
 ----------
+
+### 1.4.0
+
+* Add ActiveRecord 5.2 support
+* Require Ruby 2.2 or newer.
+
 
 ### 1.3.1
 
@@ -41,7 +49,7 @@ Example
 ```ruby
   create_table :products do |t|
     t.string :description, :null => false
-	t.string :subtype # Only if you need access of both side see example
+    t.string :subtype # Only if you need access of both side see example
     t.decimal :price
     t.timestamps
   end
@@ -60,7 +68,7 @@ Example
 
 ```ruby
   class Product < ActiveRecord::Base
-	acts_as_superclass # only if you want top-down access.
+    acts_as_superclass # only if you want top-down access.
   end
 
   class Book < ActiveRecord::Base
