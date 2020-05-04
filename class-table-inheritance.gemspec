@@ -12,16 +12,14 @@ Gem::Specification.new do |s|
   s.summary     = %q{ActiveRecord plugin designed to allow simple multiple table (class) inheritance.}
   s.description = %q{ActiveRecord plugin designed to allow simple multiple table (class) inheritance.}
 
-  s.rubyforge_project = "class-table-inheritance"
-
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.required_ruby_version = '~> 2.2'
+  s.required_ruby_version = '~> 2.5'
 
-  s.add_runtime_dependency 'activerecord', '>=4', '<6'
+  s.add_runtime_dependency 'activerecord', '~>6.0'
 
   s.add_development_dependency 'minitest-reporters','~>1.1'
   s.add_development_dependency 'rake', '>=11'
