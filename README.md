@@ -3,6 +3,12 @@
 Change log
 ----------
 
+### 1.5.0
+
+* Add ActiveRecord 6.0 support
+* Require Ruby 2.5 or newer.
+
+
 ### 1.4.0
 
 * Add ActiveRecord 5.2 support
@@ -24,10 +30,13 @@ Change log
 Note about version
 ------------------
 
-If you are using Rails 2.3.8 or other version < 3, you have to use the version 1.1.x of this plugin, for Rails 3 you need to use the version 1.2.x or master of this plugin.
+If you are using Rails 2.3.8 or other version < 3, you have to use the version 1.1.x of this gem.
+For Rails 3 you need to use the version 1.2.x or master of this gem.
+For Rails 4 and 5 you need to use the version 1.3.x to 1.4.x.
+For Rails 6 you need to use version 1.5.x or master of this gem.
 
-ClassTableInheritance 1.3.0 
----------------------------
+ClassTableInheritance
+---------------------
 
  This is an ActiveRecord plugin designed to allow 
  simple multiple table (class) inheritance.
