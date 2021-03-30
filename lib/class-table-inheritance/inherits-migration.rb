@@ -3,7 +3,7 @@ module InheritsMigration
   def create_table(table_name, options = {}, &block)
     options[:id] ||= false if options[:inherits]
     
-    super(table_name, options) do |table_defintion|
+    super(table_name, **options) do |table_defintion|
       if options[:inherits]
         if options[:inherits].kind_of?(String)
           column_to_create = options[:inherits].gsub(/::/, '_').downcase
