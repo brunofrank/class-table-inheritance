@@ -1,3 +1,4 @@
 *.gem
+/.idea
 /Gemfile.lock
 test/cti_plugin.sqlite3
